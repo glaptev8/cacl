@@ -14,4 +14,11 @@ public class Lib {
 		}
 		return (true);
 	}
+
+	public static boolean isAlpa(char c)
+	{
+		if (String.valueOf(c).matches("[a-zA-z]"))
+			return (true);
+		return (false);
+	}
 }

@@ -7,6 +7,7 @@ class Calc
 	private int index;
 	private String str;
 	private int length;
+	private LinkedHashMap<String, String> variables = new LinkedHashMap<>();
 
 	Calc()
 	{
@@ -33,14 +34,31 @@ class Calc
 		return (this.str);
 	}
 
+	private LinkedHashMap<String, String> get_variables()
+	{
+		return (this.variables);
+	}
+
+
+	void			put_variable(String str)
+	{
+		String[] var;
+
+		var = str.split("=");
+		if (!Lib.isNumeric(var[1].charAt(0)))
+			this.variables.put(var[0], this.variables.get(var[1]));
+		else
+			this.variables.put(var[0], var[1]);
+	}
+
 	int		count(String str)
 	{
 		int result;
-
 		this.str = str;
 		this.length = str.length();
 		if (get_index() >= get_length())
 			this.index = 0;
+
 		result = second();
 		while (get_index() < get_length() && (get_str().charAt(get_index()) == '+' || get_str().charAt(get_index()) == '-'))
 		{
@@ -113,11 +131,14 @@ class Calc
 		return (Integer.parseInt(get_str().substring(i, get_index())));
 	}
 
-	static String		isVariable(String str)
+	String		isVariable(String str)
 	{
 		if (str == null)
 			return ("Invalid identifier");
+		if (!str.contains("="))
+			return ("it's not variable");
 
+		String[] v;
 		int i = 0;
 		int length;
 		length = str.length();
@@ -137,12 +158,84 @@ class Calc
 				i++;
 		if (i != length)
 			return ("Invalid assignment");
+		v = str.split("=");
+		if (!Lib.isNumeric(v[1].charAt(0)))
+			if (!get_variables().containsKey(v[1]))
+				return ("Unknown variable");
 		return ("ok");
+	}
+
+	private	String get_number(String str)
+	{
+		String s;
+		int i = 0;
+		s = str;
+		if (!Lib.isNumeric((get_variables().get(s)).charAt(0)))
+			while (!Lib.isNumeric((get_variables().get(s)).charAt(0)))
+				s = get_variables().get(s);
+		else
+			s = get_variables().get(s);
+		return (s);
+	}
+
+	String replace_variables(String str)
+	{
+		int i = 0;
+		int len = str.length();
+		String s = "";
+		while (i < len)
+		{
+			if (!Lib.isNumeric(str.charAt(i)) && Lib.isAlpa(str.charAt(i)))
+				s += get_number(String.valueOf(str.charAt(i)));
+			else
+				s += String.valueOf(str.charAt(i));
+			i++;
+		}
+		return (s);
 	}
 
 	static String		isExample(String str)
 	{
+		int i = 0;
+		int len = str.length();
 		return ("ok");
+	}
+
+	String		str_replace(String str)
+	{
+		if (str == null)
+			return (null);
+		int i = 0;
+		int len = str.length();
+		String s = "";
+		int count_minus = 0;
+		while (str.charAt(i) == '+')
+			i++;
+		while (i < len)
+		{
+			if (str.charAt(i) == '-')
+			{
+				while (i < len && str.charAt(i) == '-')
+				{
+					count_minus++;
+					i++;
+				}
+				s += (count_minus % 2 == 0) ?  "+" :  "-";
+			}
+			else if (str.charAt(i) == '+')
+			{
+				while (i < len && str.charAt(i) == '+')
+					i++;
+				s += "+";
+			}
+			else
+			{
+				s += String.valueOf(str.charAt(i));
+				i++;
+			}
+			count_minus = 0;
+		}
+		return (s);
 	}
 }
 
@@ -150,22 +243,21 @@ class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		String str;
-		LinkedHashMap<String, String> variables = new LinkedHashMap<>();
-		String[] var;
 		Calc calc = new Calc();
 		String error;
 		while (!(str = scanner.nextLine().replaceAll("\\s", "")).equals("/exit"))
 		{
-			if ((error = Calc.isVariable(str)).equals("ok"))
+			str = calc.str_replace(str);
+			if ((error = calc.isVariable(str)).equals("ok"))
+				calc.put_variable(str);
+			if (error.equals("it's not variable") && (error = Calc.isExample(str)).equals("ok"))
 			{
-				var = str.split("=");
-				variables.put(var[0], var[1]);
-			}
-			if(error.equals("ok") && (error = Calc.isExample(str)).equals("ok"))
-			{
+				str = calc.replace_variables(str);
 				int n = calc.count(str);
 				System.out.println(n);
 			}
+			else if (!"ok".equals(error))
+				System.out.println(error);
 		}
 	}
 }
