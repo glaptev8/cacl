@@ -73,7 +73,6 @@ class Calc
 				result -= second();
 			}
 		}
-		this.index = 0;
 		return (result);
 	}
 
@@ -126,9 +125,17 @@ class Calc
 	private int		atoi()
 	{
 		int i = get_index();
-		while (get_index() < get_length() && Lib.isNumeric(get_str().charAt(get_index())))
+		int flag = 1;
+		if (i == 0 && get_index() == 0 && ((get_str().charAt(get_index()) == '-') || (get_str().charAt(get_index()) == '+')))
+		{
+			flag = (get_str().charAt(get_index()) == '-') ? -1 : 1;
 			increase_index();
-		return (Integer.parseInt(get_str().substring(i, get_index())));
+			i++;
+		}
+		while (get_index() < get_length() && Lib.isNumeric(get_str().charAt(get_index()))) {
+			increase_index();
+		}
+		return (Integer.parseInt(get_str().substring(i, get_index())) * flag);
 	}
 
 	String		isVariable(String str)
@@ -209,6 +216,7 @@ class Calc
 		int len = str.length();
 		String s = "";
 		int count_minus = 0;
+		int[] count_bracket = new int[2];
 		while (str.charAt(i) == '+')
 			i++;
 		while (i < len)
@@ -228,13 +236,21 @@ class Calc
 					i++;
 				s += "+";
 			}
+			else if ((str.charAt(i) == '/' || str.charAt(i) == '*') && (i + 1 < len && (str.charAt(i + 1) == '*') || (str.charAt(i + 1) == '/')))
+				return ("Invalid expression");
 			else
 			{
+				if (str.charAt(i) == '(')
+					count_bracket[0]++;
+				else if (str.charAt(i) == ')')
+					count_bracket[1]++;
 				s += String.valueOf(str.charAt(i));
 				i++;
 			}
 			count_minus = 0;
 		}
+		if (count_bracket[0] != count_bracket[1])
+			return ("Invalid expression");
 		return (s);
 	}
 }
@@ -244,11 +260,17 @@ class Main {
 		Scanner scanner = new Scanner(System.in);
 		String str;
 		Calc calc = new Calc();
-		String error;
-		while (!(str = scanner.nextLine().replaceAll("\\s", "")).equals("/exit"))
+		String error = "";
+		while (!"/exit".equals(str = scanner.nextLine()))
 		{
-			str = calc.str_replace(str);
-			if ((error = calc.isVariable(str)).equals("ok"))
+			if (str.equals(""))
+				continue;
+			if (str.equals("\\help")) {
+				System.out.println("you can write variables and any examples");
+				continue;
+			}
+			error = str = calc.str_replace(str.replaceAll("\\s", ""));
+			if (!error.equals("Invalid expression") && (error = calc.isVariable(str)).equals("ok"))
 				calc.put_variable(str);
 			if (error.equals("it's not variable") && (error = Calc.isExample(str)).equals("ok"))
 			{

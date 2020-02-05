@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a243525e-969d-4b90-bb2b-d321aca30f4f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/_mac/keymap.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_mac/laf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_mac/path.macros.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/codestyles/Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/colors.scheme.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/debugger.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/editor.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/find.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ide.general.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projectView.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scala.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calc.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/lib/Lib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/lib/Lib.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user.xml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,10 +26,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="238" column="13" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
+            <state relative-caret-position="186">
+              <caret line="117" column="23" lean-forward="true" selection-start-line="117" selection-end-line="118" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#290#291#0" expanded="true" />
+                <element signature="e#316#317#0" expanded="true" />
+                <element signature="e#351#352#0" expanded="true" />
+                <element signature="e#370#371#0" expanded="true" />
+                <element signature="e#401#402#0" expanded="true" />
+                <element signature="e#428#429#0" expanded="true" />
+                <element signature="e#458#459#0" expanded="true" />
+                <element signature="e#482#483#0" expanded="true" />
                 <element signature="e#541#542#0" expanded="true" />
                 <element signature="e#571#572#0" expanded="true" />
               </folding>
@@ -130,6 +121,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -181,15 +173,16 @@
       <workItem from="1580907888604" duration="3957000" />
       <workItem from="1580919775363" duration="9000" />
       <workItem from="1580919926930" duration="22000" />
-      <workItem from="1580920242010" duration="1697000" />
+      <workItem from="1580920242010" duration="4788000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5685000" />
+    <option name="totallyTimeSpent" value="8776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -205,11 +198,11 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3299363" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Educational.CheckDetails" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.3299363" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -231,21 +224,15 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>193</line>
+          <line>266</line>
           <properties />
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>172</line>
+          <line>117</line>
           <properties />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>254</line>
-          <properties />
-          <option name="timeStamp" value="11" />
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -267,10 +254,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="238" column="13" selection-start-line="238" selection-start-column="13" selection-end-line="238" selection-end-column="13" />
+        <state relative-caret-position="186">
+          <caret line="117" column="23" lean-forward="true" selection-start-line="117" selection-end-line="118" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#290#291#0" expanded="true" />
+            <element signature="e#316#317#0" expanded="true" />
+            <element signature="e#351#352#0" expanded="true" />
+            <element signature="e#370#371#0" expanded="true" />
+            <element signature="e#401#402#0" expanded="true" />
+            <element signature="e#428#429#0" expanded="true" />
+            <element signature="e#458#459#0" expanded="true" />
+            <element signature="e#482#483#0" expanded="true" />
             <element signature="e#541#542#0" expanded="true" />
             <element signature="e#571#572#0" expanded="true" />
           </folding>
