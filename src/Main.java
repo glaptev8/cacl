@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 import main.lib.Lib;
@@ -56,8 +57,6 @@ class Calc
 		int result;
 		this.str = str;
 		this.length = str.length();
-		if (get_index() >= get_length())
-			this.index = 0;
 
 		result = second();
 		while (get_index() < get_length() && (get_str().charAt(get_index()) == '+' || get_str().charAt(get_index()) == '-'))
@@ -73,6 +72,8 @@ class Calc
 				result -= second();
 			}
 		}
+		if (get_index() >= get_length())
+			this.index = 0;
 		return (result);
 	}
 
@@ -82,11 +83,11 @@ class Calc
 
 		result = third();
 		while	( get_index() < get_length() &&
-					(get_str().charAt(get_index()) == '*' ||
-					 get_str().charAt(get_index()) == '/' ||
-					 get_str().charAt(get_index()) == '%'
-					)
+				(get_str().charAt(get_index()) == '*' ||
+						get_str().charAt(get_index()) == '/' ||
+						get_str().charAt(get_index()) == '%'
 				)
+		)
 		{
 			if (get_str().charAt(get_index()) == '*')
 			{
@@ -255,7 +256,7 @@ class Calc
 	}
 }
 
-class Main {
+public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		String str;
@@ -265,11 +266,17 @@ class Main {
 		{
 			if (str.equals(""))
 				continue;
-			if (str.equals("\\help")) {
+			str = str.replaceAll("\\s","");
+			if (str.equals("/help")) {
 				System.out.println("you can write variables and any examples");
 				continue;
 			}
-			error = str = calc.str_replace(str.replaceAll("\\s", ""));
+			if (str.charAt(0) == '/')
+			{
+				System.out.println("Unknown command");
+				continue;
+			}
+			error = str = calc.str_replace(str);
 			if (!error.equals("Invalid expression") && (error = calc.isVariable(str)).equals("ok"))
 				calc.put_variable(str);
 			if (error.equals("it's not variable") && (error = Calc.isExample(str)).equals("ok"))
@@ -281,5 +288,6 @@ class Main {
 			else if (!"ok".equals(error))
 				System.out.println(error);
 		}
+		System.out.println("Bye!");
 	}
 }
