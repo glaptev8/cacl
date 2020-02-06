@@ -275,7 +275,7 @@ class Calc
 				brack_one++;
 			else if (q == ')')
 				brack_two++;
-			else if (!Lib.isNumeric(q) && !Lib.isNumeric(q) && q != '-' && q != '+' && q != '/' && q != '%')
+			else if (!Lib.isNumeric(q) && !Lib.isAlpa(q) && q != '-' && q != '+' && q != '/' && q != '%' && q != '*')
 				return ("Invalid expression");
 		if (brack_one != brack_two)
 			return ("Invalid expression");
