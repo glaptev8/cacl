@@ -8,5 +8,7 @@ d = 10<br/>
 c = d<br/>
 (n + d) * c + 20 / 10<br/>
 <br/>
+Вы можете вводить выражения до тех пор пока не введете "/exit"<br/>
+также калькулятор поддерживает команду "/help"<br/>
 запустить:<br/>
 git clone https://github.com/glaptev8/calc && cd calc/src && javac Main.java && java Main<br/>
