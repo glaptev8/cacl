@@ -9,4 +9,4 @@ c = d<br/>
 (n + d) * c + 20 / 10<br/>
 <br/>
 запустить:<br/>
-git clone https://github.com/glaptev8/calc && cd calc/src && java Main.java<br/>
+git clone https://github.com/glaptev8/calc && cd calc/src && javac Main.java && java Main<br/>
