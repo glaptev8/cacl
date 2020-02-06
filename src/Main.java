@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 import main.lib.Lib;
@@ -9,10 +8,21 @@ class Calc
 	private String str;
 	private int length;
 	private LinkedHashMap<String, String> variables = new LinkedHashMap<>();
+	private LinkedHashMap<String, String> commands = new LinkedHashMap<>();
 
 	Calc()
 	{
 		this.index = 0;
+		commands.put("/help", "Ты можешь просто ввести пример по типу:\n" +
+				"\t1 + 2 - 3 -- 4 * (1 + 2 / 2)\n\n" +
+				"также ты можешь обьявить переменную и использовать ее в примере по типу:\na = 10\n" +
+				"b=20\n" +
+				"c=a a + b - c");
+	}
+
+	public void print_command(String com)
+	{
+		System.out.println(this.commands.get(com));
 	}
 
 	private int		get_index()
@@ -41,7 +51,7 @@ class Calc
 	}
 
 
-	void			put_variable(String str)
+	private void			put_variable(String str)
 	{
 		String[] var;
 
@@ -52,7 +62,48 @@ class Calc
 			this.variables.put(var[0], var[1]);
 	}
 
-	int		count(String str)
+	void			count(String str)
+	{
+		String var;
+		String exam;
+		String com;
+
+		if ("".equals(str))
+			return;
+		str = str_replace(str);
+		if ("".equals(str) || str.equals("Invalid expression"))
+		{
+			System.out.println("Invalid expression");
+			return;
+		}
+		var = isVariable(str);
+		exam = isExample(str);
+		com = isCommand(str);
+		if (com.equals("Unknow command") && str.charAt(0) == '/') {
+			System.out.println("Unknow command");
+		}
+		else if (!com.equals("Unknow command"))
+			print_command(com);
+		else if (var.equals("ok"))
+			put_variable(str);
+		else if (var.equals("it's not variable") && exam.equals("ok"))
+		{
+			str = replace_variables(str);
+			if (str.contains("null"))
+			{
+				System.out.println("Unknown variable");
+				return;
+			}
+			int n = first(str);
+			System.out.println(n);
+		}
+		else if (!exam.equals("ok"))
+			System.out.println(exam);
+		else
+			System.out.println(var);
+	}
+
+	private int		first(String str)
 	{
 		int result;
 		this.str = str;
@@ -112,10 +163,12 @@ class Calc
 	{
 		int result;
 
-		if (get_index() < get_length() && get_str().charAt(get_index()) == '(')
+		if (get_index() >= get_length())
+			return (0);
+		if (get_str().charAt(get_index()) == '(')
 		{
 			increase_index();
-			result = count(get_str());
+			result = first(get_str());
 			increase_index();
 		}
 		else
@@ -136,6 +189,8 @@ class Calc
 		while (get_index() < get_length() && Lib.isNumeric(get_str().charAt(get_index()))) {
 			increase_index();
 		}
+		if (i >= get_length() || !Lib.isNumeric(get_str().charAt(i)))
+			return (0);
 		return (Integer.parseInt(get_str().substring(i, get_index())) * flag);
 	}
 
@@ -176,49 +231,66 @@ class Calc
 	private	String get_number(String str)
 	{
 		String s;
-		int i = 0;
 		s = str;
-		if (!Lib.isNumeric((get_variables().get(s)).charAt(0)))
-			while (!Lib.isNumeric((get_variables().get(s)).charAt(0)))
+		if (get_variables().containsKey(str) && !Lib.isNumeric((get_variables().get(s)).charAt(0)))
+			while (get_variables().containsKey(str) && !Lib.isNumeric((get_variables().get(s)).charAt(0)))
 				s = get_variables().get(s);
 		else
 			s = get_variables().get(s);
 		return (s);
 	}
 
-	String replace_variables(String str)
+	private String replace_variables(String str)
 	{
 		int i = 0;
 		int len = str.length();
 		String s = "";
+		int j;
 		while (i < len)
 		{
 			if (!Lib.isNumeric(str.charAt(i)) && Lib.isAlpa(str.charAt(i)))
-				s += get_number(String.valueOf(str.charAt(i)));
+			{
+				j = i;
+				while (i < len && Lib.isAlpa(str.charAt(i)))
+					i++;
+				s += get_number(str.substring(j, i));
+			}
 			else
+			{
 				s += String.valueOf(str.charAt(i));
-			i++;
+				i++;
+			}
 		}
 		return (s);
 	}
 
 	static String		isExample(String str)
 	{
-		int i = 0;
-		int len = str.length();
+		char[] s = str.toCharArray();
+		int brack_one = 0;
+		int brack_two = 0;
+
+		for(char q: s)
+			if (q == '(')
+				brack_one++;
+			else if (q == ')')
+				brack_two++;
+			else if (!Lib.isNumeric(q) && !Lib.isNumeric(q) && q != '-' && q != '+' && q != '/' && q != '%')
+				return ("Invalid expression");
+		if (brack_one != brack_two)
+			return ("Invalid expression");
 		return ("ok");
 	}
 
-	String		str_replace(String str)
+	private String		str_replace(String str)
 	{
 		if (str == null)
-			return (null);
+			return ("");
 		int i = 0;
 		int len = str.length();
 		String s = "";
 		int count_minus = 0;
-		int[] count_bracket = new int[2];
-		while (str.charAt(i) == '+')
+		while (i < len && str.charAt(i) == '+')
 			i++;
 		while (i < len)
 		{
@@ -237,23 +309,25 @@ class Calc
 					i++;
 				s += "+";
 			}
-			else if ((str.charAt(i) == '/' || str.charAt(i) == '*') && (i + 1 < len && (str.charAt(i + 1) == '*') || (str.charAt(i + 1) == '/')))
+			else if ((str.charAt(i) == '/' || str.charAt(i) == '*') && (i + 1 < len && (str.charAt(i + 1) == '*') || (i + 1 < len && str.charAt(i + 1) == '/')))
 				return ("Invalid expression");
 			else
 			{
-				if (str.charAt(i) == '(')
-					count_bracket[0]++;
-				else if (str.charAt(i) == ')')
-					count_bracket[1]++;
 				s += String.valueOf(str.charAt(i));
 				i++;
 			}
 			count_minus = 0;
 		}
-		if (count_bracket[0] != count_bracket[1])
-			return ("Invalid expression");
 		return (s);
 	}
+
+	static public String isCommand (String str)
+	{
+		if (str.equals("/help"))
+			return ("/help");
+		return ("Unknow command");
+	}
+
 }
 
 public class Main {
@@ -261,33 +335,8 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		String str;
 		Calc calc = new Calc();
-		String error = "";
-		while (!"/exit".equals(str = scanner.nextLine()))
-		{
-			if (str.equals(""))
-				continue;
-			str = str.replaceAll("\\s","");
-			if (str.equals("/help")) {
-				System.out.println("you can write variables and any examples");
-				continue;
-			}
-			if (str.charAt(0) == '/')
-			{
-				System.out.println("Unknown command");
-				continue;
-			}
-			error = str = calc.str_replace(str);
-			if (!error.equals("Invalid expression") && (error = calc.isVariable(str)).equals("ok"))
-				calc.put_variable(str);
-			if (error.equals("it's not variable") && (error = Calc.isExample(str)).equals("ok"))
-			{
-				str = calc.replace_variables(str);
-				int n = calc.count(str);
-				System.out.println(n);
-			}
-			else if (!"ok".equals(error))
-				System.out.println(error);
-		}
+		while (!"/exit".equals(str = scanner.nextLine().replaceAll("\\s","")))
+			calc.count(str);
 		System.out.println("Bye!");
 	}
 }
