@@ -91,6 +91,7 @@ class Calc
 				System.out.println("Unknown variable");
 				return;
 			}
+			this.index = 0;
 			int n = first(str);
 			System.out.println(n);
 		}
@@ -117,8 +118,6 @@ class Calc
 				result -= second();
 			}
 		}
-		if (get_index() >= get_length())
-			this.index = 0;
 		return (result);
 	}
 
@@ -263,14 +262,21 @@ class Calc
 		char[] s = str.toCharArray();
 		int brack_one = 0;
 		int brack_two = 0;
-
+		char p = ' ';
 		for(char q: s)
+		{
 			if (q == '(')
 				brack_one++;
 			else if (q == ')')
 				brack_two++;
 			else if (!Lib.isNumeric(q) && !Lib.isAlpa(q) && q != '-' && q != '+' && q != '/' && q != '%' && q != '*')
 				return ("Invalid expression");
+			else if ((p == '-' || p == '+' || p == '/' || p == '%' || p == '*') && !Lib.isNumeric(q))
+				return ("Invalid expression");
+			if (q == '(' && p != '-' && p != '+' && p != '/' && p != '%' && p != '*')
+				return ("Invalid expression");
+			p = q;
+		}
 		if (brack_one != brack_two)
 			return ("Invalid expression");
 		return ("ok");
