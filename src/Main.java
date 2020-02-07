@@ -79,28 +79,22 @@ class Calc
 		var = isVariable(str);
 		exam = isExample(str);
 		com = isCommand(str);
-		if (com.equals("Unknow command") && str.charAt(0) == '/') {
+		if (com.equals("Unknow command") && str.charAt(0) == '/')
 			System.out.println("Unknow command");
-		}
-		else if (!com.equals("Unknow command"))
-			print_command(com);
 		else if (var.equals("ok"))
 			put_variable(str);
-		else if (var.equals("it's not variable") && exam.equals("ok"))
-		{
+		else if (!var.equals("it's not variable"))
+			System.out.println(var);
+		else if (exam.equals("ok")) {
 			str = replace_variables(str);
-			if (str.contains("null"))
-			{
+			if (str.contains("null")) {
 				System.out.println("Unknown variable");
 				return;
 			}
 			int n = first(str);
 			System.out.println(n);
 		}
-		else if (!exam.equals("ok"))
-			System.out.println(exam);
-		else
-			System.out.println(var);
+		else System.out.println(exam);
 	}
 
 	private int		first(String str)
@@ -335,6 +329,7 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		String str;
 		Calc calc = new Calc();
+		System.out.println("write example");
 		while (!"/exit".equals(str = scanner.nextLine().replaceAll("\\s","")))
 			calc.count(str);
 		System.out.println("Bye!");
