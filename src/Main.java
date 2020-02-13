@@ -81,6 +81,8 @@ class Calc
 		com = isCommand(str);
 		if (com.equals("Unknow command") && str.charAt(0) == '/')
 			System.out.println("Unknow command");
+		else if (str.charAt(0) == '/')
+			System.out.println(com);
 		else if (var.equals("ok"))
 			put_variable(str);
 		else if (!var.equals("it's not variable"))
@@ -271,7 +273,7 @@ class Calc
 				brack_two++;
 			else if (!Lib.isNumeric(q) && !Lib.isAlpa(q) && q != '-' && q != '+' && q != '/' && q != '%' && q != '*')
 				return ("Invalid expression");
-			else if ((p == '-' || p == '+' || p == '/' || p == '%' || p == '*') && !Lib.isNumeric(q))
+			else if ((p == '-' || p == '+' || p == '/' || p == '%' || p == '*') && (!Lib.isNumeric(q) && !Lib.isAlpa(q)) )
 				return ("Invalid expression");
 			if (q == '(' && p != '-' && p != '+' && p != '/' && p != '%' && p != '*')
 				return ("Invalid expression");
@@ -330,7 +332,7 @@ class Calc
 
 }
 
-public class Main {
+class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		String str;
