@@ -9,6 +9,7 @@ class Calc
 	private int length;
 	private LinkedHashMap<String, String> variables = new LinkedHashMap<>();
 	private LinkedHashMap<String, String> commands = new LinkedHashMap<>();
+	private String result = "";
 
 	Calc()
 	{
@@ -45,6 +46,11 @@ class Calc
 		return (this.str);
 	}
 
+	public String get_result()
+	{
+		return (this.result);
+	}
+
 	private LinkedHashMap<String, String> get_variables()
 	{
 		return (this.variables);
@@ -67,37 +73,34 @@ class Calc
 		String var;
 		String exam;
 		String com;
-
+		this.result = "";
 		if ("".equals(str))
 			return;
 		str = str_replace(str);
 		if ("".equals(str) || str.equals("Invalid expression"))
 		{
-			System.out.println("Invalid expression");
+			this.result = "Invalid expression";
 			return;
 		}
 		var = isVariable(str);
 		exam = isExample(str);
 		com = isCommand(str);
 		if (com.equals("Unknow command") && str.charAt(0) == '/')
-			System.out.println("Unknow command");
-		else if (str.charAt(0) == '/')
-			System.out.println(com);
+			this.result = ("Unknow command");
 		else if (var.equals("ok"))
 			put_variable(str);
 		else if (!var.equals("it's not variable"))
-			System.out.println(var);
+			this.result = var;
 		else if (exam.equals("ok")) {
 			str = replace_variables(str);
 			if (str.contains("null")) {
-				System.out.println("Unknown variable");
+				this.result = "Unknown variable";
 				return;
 			}
 			this.index = 0;
-			int n = first(str);
-			System.out.println(n);
+			this.result = Integer.toString(first(str));
 		}
-		else System.out.println(exam);
+		else this.result = exam;
 	}
 
 	private int		first(String str)
@@ -273,7 +276,7 @@ class Calc
 				brack_two++;
 			else if (!Lib.isNumeric(q) && !Lib.isAlpa(q) && q != '-' && q != '+' && q != '/' && q != '%' && q != '*')
 				return ("Invalid expression");
-			else if ((p == '-' || p == '+' || p == '/' || p == '%' || p == '*') && (!Lib.isNumeric(q) && !Lib.isAlpa(q)) )
+			else if ((p == '-' || p == '+' || p == '/' || p == '%' || p == '*') && !Lib.isNumeric(q))
 				return ("Invalid expression");
 			if (q == '(' && p != '-' && p != '+' && p != '/' && p != '%' && p != '*')
 				return ("Invalid expression");
@@ -337,9 +340,19 @@ class Main {
 		Scanner scanner = new Scanner(System.in);
 		String str;
 		Calc calc = new Calc();
-		System.out.println("write example");
-		while (!"/exit".equals(str = scanner.nextLine().replaceAll("\\s","")))
-			calc.count(str);
-		System.out.println("Bye!");
+
+		if (args.length == 1 && args[0].equals("-v"))
+			new Vizualizator(calc);
+		else
+		{
+			System.out.println("write example");
+			while (!"/exit".equals(str = scanner.nextLine().replaceAll("\\s","")))
+			{
+				calc.count(str);
+				if (!calc.get_result().isEmpty())
+					System.out.println(calc.get_result());
+			}
+			System.out.println("Bye!");
+		}
 	}
 }
