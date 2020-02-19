@@ -15,3 +15,5 @@ git clone https://github.com/glaptev8/calc<br/>
 cd calc/src<br/>
 javac Main.java<br/>
 java Main или java Main -v (визуализация)<br/>
+<br/>
+* калькулятор не проверяет переполнение инта, мб доделаю позже
