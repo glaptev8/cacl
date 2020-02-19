@@ -11,4 +11,7 @@ c = d<br/>
 Вы можете вводить выражения до тех пор пока не введете "/exit"<br/>
 также калькулятор поддерживает команду "/help"<br/>
 запустить:<br/>
-git clone https://github.com/glaptev8/calc && cd calc/src && javac Main.java && java Main<br/>
+git clone https://github.com/glaptev8/calc<br/>
+cd calc/src<br/>
+javac Main.java<br/>
+java Main или java Main -v (визуализация)<br/>
